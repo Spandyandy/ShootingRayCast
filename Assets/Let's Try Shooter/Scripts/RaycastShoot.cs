@@ -35,6 +35,9 @@ public class RaycastShoot : MonoBehaviour
 
     {
 
+        laserLine = GetComponent<LineRenderer>();
+        gunAudio = GetComponent<AudioSource>();
+        fpsCam = GetComponentInParent<Camera>();
 
 
     }
