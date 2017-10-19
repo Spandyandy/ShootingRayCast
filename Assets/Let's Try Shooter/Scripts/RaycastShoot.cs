@@ -17,6 +17,7 @@ public class RaycastShoot : MonoBehaviour
     private float nextFire;
 
 
+
     void Start()
     {
         laserLine = GetComponent<LineRenderer>();
@@ -38,12 +39,23 @@ public class RaycastShoot : MonoBehaviour
             Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
 
             RaycastHit hit;
-
+            
             laserLine.SetPosition(0, gunEnd.position);
 
             if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
             {
                 laserLine.SetPosition(1, hit.point);
+
+                ShootableBox health = hit.collider.GetComponent<ShootableBox>();
+
+                if (health != null)
+                {
+                    health.Damage(gunDamage);
+                }
+                if (hit.rigidbody != null)
+                {
+                    hit.rigidbody.AddForce(-hit.normal * hitForce);
+                }
             }
             else
             {
